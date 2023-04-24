@@ -2,6 +2,8 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const svg = require('./lib/shapes');
+const jsonFile = require("./color.json");
+
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -21,10 +23,15 @@ const questions = [
     {
         type: 'input',
         name: 'textColor',
-        message: 'Please enter a color keyword OR a hexadecimal number: ',
+        message: 'Please enter a color keyword OR a hexadecimal number for the text: ',
         validate: text => {
             if (text) {
-            return true;
+                if(isColor(text) == true){
+                    return true
+                } else {
+                    console.log('You did not enter a color keyword OR a hexadecimal number.');
+                    return false;
+                }
             } else {
             console.log('You did not enter a color keyword OR a hexadecimal number.');
             return false;
@@ -34,16 +41,21 @@ const questions = [
     {
         type: 'list',
         name: 'shape',
-        message: 'which shape wuould you like your logo to be? (Use arrow key to select)',
+        message: 'which shape would you like your logo to be? (Use arrow key to select)',
         choices:['Circle', 'Triangle', 'Square'],
     },
     {
         type: 'input',
         name: 'shapeColor',
-        message: 'Please enter a color keyword OR a hexadecimal number: ',
+        message: 'Please enter a color keyword OR a hexadecimal number for the shape: ',
         validate: text => {
             if (text) {
-            return true;
+                if(isColor(text) == true){
+                    return true
+                } else {
+                    console.log('You did not enter a color keyword OR a hexadecimal number.');
+                    return false;
+                }
             } else {
             console.log('You did not enter a color keyword OR a hexadecimal number.');
             return false;
@@ -52,7 +64,7 @@ const questions = [
     },
 ];
 
-// TODO: Create a function to write README file
+// TODO: Create a function to write SVG file
 function writeToFile(fileName, data) {
 
     fs.writeFile(fileName, data, error => {
@@ -69,7 +81,6 @@ function init() {
     return inquirer.prompt(questions)
     .then((response) => {
         var position = textLength(response.text.length, response.shape)
-        console.log(position)
         var obj
         if(response.shape == "Triangle"){
             obj = new svg.Triangle(response.text.toUpperCase(), response.textColor, response.shapeColor, position);
@@ -100,7 +111,7 @@ function textLength(input, shape){
         if(input == 1){
             return "30%"
         }else if(input == 2){
-            return "25%"
+            return "23%"
         }else if(input == 3){
             return "20%"
         }
@@ -116,5 +127,24 @@ function textLength(input, shape){
 
 }
 
+
 // Function call to initialize app
 init();
+
+function isColor(input) {
+
+    const colors = jsonFile;
+    const ColorKeywords = [
+        "black", "silver", "gray", "white", "maroon", "red", "purple", "fuchsia", 
+        "green", "lime", "olive", "yellow", "navy", "blue", "teal", "aqua", "orange", "pink", "brown"
+      ]
+  
+    if (/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(input)) { // check if input is a valid hexadecimal color code
+        return true;
+    } else if (ColorKeywords.includes(input.toLowerCase())) { 
+        return true;
+    } else {
+      return false;
+    }
+  }
+  
