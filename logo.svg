@@ -1,0 +1,6 @@
+
+<svg width="300" height="200">
+    <polygon points="140,0 30,190 250,190" fill="yellow" />
+    <text x="31%" y="75%" font-size="60" fill="red">REE</text>
+</svg>
+        
