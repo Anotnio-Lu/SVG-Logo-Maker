@@ -2,8 +2,6 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const svg = require('./lib/shapes');
-const jsonFile = require("./color.json");
-
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -133,7 +131,6 @@ init();
 
 function isColor(input) {
 
-    const colors = jsonFile;
     const ColorKeywords = [
         "black", "silver", "gray", "white", "maroon", "red", "purple", "fuchsia", 
         "green", "lime", "olive", "yellow", "navy", "blue", "teal", "aqua", "orange", "pink", "brown"
