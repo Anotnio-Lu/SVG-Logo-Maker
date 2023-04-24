@@ -34,7 +34,7 @@ const questions = [
     {
         type: 'list',
         name: 'shape',
-        message: 'which shape wuould you like your logo to be? (Use arrow key to select)',
+        message: 'which shape would you like your logo to be? (Use arrow key to select)',
         choices:['Circle', 'Triangle', 'Square'],
     },
     {
@@ -69,7 +69,6 @@ function init() {
     return inquirer.prompt(questions)
     .then((response) => {
         var position = textLength(response.text.length, response.shape)
-        console.log(position)
         var obj
         if(response.shape == "Triangle"){
             obj = new svg.Triangle(response.text.toUpperCase(), response.textColor, response.shapeColor, position);
@@ -100,7 +99,7 @@ function textLength(input, shape){
         if(input == 1){
             return "30%"
         }else if(input == 2){
-            return "25%"
+            return "23%"
         }else if(input == 3){
             return "20%"
         }
